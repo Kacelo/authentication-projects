@@ -10,11 +10,13 @@ import env from "dotenv";
 const app = express();
 const port = 3000;
 const saltRounds = 10;
+const {SESSION_SECRET} = process.env
+
 env.config();
 
 app.use(
   session({
-    secret: "TOPSECRETWORD",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -26,10 +28,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const db = new pg.Client({
-  user: "postgres",
+  user: "vernon",
   host: "localhost",
-  database: "secrets",
-  password: "123456",
+  database: "auth",
+  password: "admin",
   port: 5432,
 });
 db.connect();
